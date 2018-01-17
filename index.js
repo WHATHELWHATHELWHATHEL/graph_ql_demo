@@ -8,15 +8,15 @@ const schema = buildSchema(`
     Hello: [Test]
   }
   type Test {
-    TestValue: String,
-    TestRandom: String,
+    TestInstant: String,
+    TestDelay: String,
   }
 `);
 
 const getTest = () => ({
-  TestValue: () => `TestValue: ${Math.random()}}`,
-  TestRandom: () => new Promise(resolve => (
-    setTimeout(() => resolve(`TestRandom: ${Math.random()}`), 5000)
+  TestInstant: () => `TestInstant: ${Math.random()}}`,
+  TestDelay: () => new Promise(resolve => (
+    setTimeout(() => resolve(`TestDelay: ${Math.random()}`), 5000)
   )),
 });
 
