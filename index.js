@@ -4,16 +4,25 @@ import { buildSchema } from 'graphql';
 
 const schema = buildSchema(`
   type Query {
-    hello: String
+    Title: String,
+    Hello: [Test]
+  }
+  type Test {
+    TestValue: String,
+    TestRandom: String,
   }
 `);
 
+const getTest = () => ({
+  TestValue: () => `TestValue: ${Math.random()}}`,
+  TestRandom: () => new Promise(resolve => (
+    setTimeout(() => resolve(`TestRandom: ${Math.random()}`), 5000)
+  )),
+});
+
 const root = {
-  hello: () => (
-    new Promise(resolve => (
-      setTimeout(() => resolve('promise resutl'), 5 * 1000)
-    ))
-  ),
+  Hello: () => [1, 2, 3, 4, 5, 6].map(() => getTest()),
+  Title: () => `Title ${Math.random()}`,
 };
 
 
