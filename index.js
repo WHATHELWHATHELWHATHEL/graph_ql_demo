@@ -8,7 +8,13 @@ const schema = buildSchema(`
   }
 `);
 
-const root = { hello: () => 'Hello world!' };
+const root = {
+  hello: () => (
+    new Promise(resolve => (
+      setTimeout(() => resolve('promise resutl'), 5 * 1000)
+    ))
+  ),
+};
 
 
 const app = express();
