@@ -1,27 +1,22 @@
-import {
-  graphql,
-  GraphQLSchema,
-  GraphQLObjectType,
-  GraphQLString,
-} from 'graphql';
+import express from 'express';
+import graphqlHTTP from 'express-graphql';
+import { buildSchema } from 'graphql';
 
-const schema = new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
-    fields: {
-      hello: {
-        type: GraphQLString,
-        resolve: () => new Promise((resolve) => {
-          setTimeout(
-            () => resolve('delay message'),
-            5 * 1000
-          );
-        }),
-      },
-    },
-  }),
-});
+const schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
 
-const query = '{ hello }';
+const root = { hello: () => 'Hello world!' };
 
-graphql(schema, query).then(result => console.log(result));
+
+const app = express();
+
+app.use('/', graphqlHTTP({
+  schema,
+  rootValue: root,
+  graphiql: true,
+}));
+
+app.listen(4000, () => console.log('Now browse to localhost:4000/graphql'));
