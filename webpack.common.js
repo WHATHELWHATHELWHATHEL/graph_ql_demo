@@ -1,5 +1,12 @@
+const path = require('path');
 // webpack.config.js
 module.exports = {
+  entry: './index.js',
+  // 指定文件的输出格式
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'index.js',
+  },
   // 定义加载的时候对各种文件的处理逻辑,
   // 使用node_modules处理所有文件， 但不处理node_modules里面的文件
   module: {
