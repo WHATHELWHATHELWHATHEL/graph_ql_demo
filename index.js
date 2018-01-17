@@ -11,9 +11,12 @@ const schema = new GraphQLSchema({
     fields: {
       hello: {
         type: GraphQLString,
-        resolve() {
-          return 'world';
-        },
+        resolve: () => new Promise((resolve) => {
+          setTimeout(
+            () => resolve('delay message'),
+            5 * 1000
+          );
+        }),
       },
     },
   }),
